@@ -28,3 +28,6 @@ add_custom_command(TARGET hiredis POST_BUILD
 add_custom_command(TARGET hiredis POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/include/sds.h ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/include/sds.h
 )
+add_custom_command(TARGET hiredis POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/include/read.h ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/include/read.h
+)
