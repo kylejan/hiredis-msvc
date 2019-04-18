@@ -32,11 +32,12 @@
 #ifdef _WIN32
 #include "win32_hiredis.h"
 #include "win32_interop/win32_wsiocp2.h"
+#else
+#include <strings.h>
 #endif
 #include "fmacros.h"
 #include <stdlib.h>
 #include <string.h>
-POSIX_ONLY(#include <strings.h>)
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>

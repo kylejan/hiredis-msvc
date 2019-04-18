@@ -25,6 +25,7 @@
 
 #include <windows.h>
 #include <stdexcept>
+#include <system_error>
 #include <map>
 using namespace std;
 
@@ -56,7 +57,7 @@ LPVOID DLLMap::getProcAddress(string dll, string functionName)
 
 DLLMap::~DLLMap()
 {
-	for each(auto modPair in (*this))
+	for (auto modPair : (*this))
 	{
 		FreeLibrary(modPair.second);
 	}

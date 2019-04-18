@@ -25,6 +25,7 @@
 #include "win32_interop/win32_fdapi.h"
 #include "win32_interop/win32_rfdmap.h"
 #include <exception>
+#include <system_error>
 #include <mswsock.h>
 #include <sys/stat.h>
 #include "win32_interop/win32_fdapi_crt.h"
@@ -668,12 +669,12 @@ int FDAPI_poll(struct pollfd *fds, nfds_t nfds, int timeout) {
             }
 
             if (timeout < 0) {
-                ret = select(0, &readSet, &writeSet, &excepSet, NULL);
+                ret = f_select(0, &readSet, &writeSet, &excepSet, NULL);
             } else {
                 struct timeval tv;
                 tv.tv_sec = timeout / 1000;
                 tv.tv_usec = 1000 * (timeout % 1000);
-                ret = select(0, &readSet, &writeSet, &excepSet, &tv);
+                ret = f_select(0, &readSet, &writeSet, &excepSet, &tv);
             }
 
             if (ret < 0) {

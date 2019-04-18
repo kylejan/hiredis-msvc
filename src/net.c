@@ -56,6 +56,7 @@
 #include <poll.h>
 #endif
 #include <limits.h>
+#include <stdlib.h>
 
 #include "net.h"
 #include "sds.h"
@@ -190,7 +191,7 @@ int redisKeepAlive(redisContext *c, int interval) {
         __redisSetError(c,REDIS_ERR_OTHER,strerror(errno));
         return REDIS_ERR;
     }
-#else
+#elif defined(_WIN32)
     {
         struct tcp_keepalive settings;
         DWORD bytesReturned;
@@ -482,9 +483,9 @@ addrretry:
 #else
                 if (win32_setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&n,
                     sizeof(n)) < 0) {
-#endif
                     win32_freeaddrinfo(bservinfo);
                     goto error;
+#endif
                 }
             }
 
@@ -498,12 +499,12 @@ addrretry:
             freeaddrinfo(bservinfo);
 #else
                 if (win32_bind(s, b->ai_addr, b->ai_addrlen) != -1) {
-#endif
                     bound = 1;
                     break;
                 }
             }
             win32_freeaddrinfo(bservinfo);
+#endif
             if (!bound) {
                 char buf[128];
                 snprintf(buf,sizeof(buf),"Can't bind socket: %s",strerror(errno));
